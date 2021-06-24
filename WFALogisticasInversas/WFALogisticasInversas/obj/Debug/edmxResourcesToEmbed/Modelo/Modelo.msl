@@ -1,0 +1,108 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+  <EntityContainerMapping StorageEntityContainer="DB_A3F19C_producccionModelStoreContainer" CdmEntityContainer="DB_A3F19C_producccionEntities">
+    <EntitySetMapping Name="li_cajas">
+      <EntityTypeMapping TypeName="DB_A3F19C_producccionModel.li_cajas">
+        <MappingFragment StoreEntitySet="li_cajas">
+          <ScalarProperty Name="id" ColumnName="id" />
+          <ScalarProperty Name="Folio" ColumnName="Folio" />
+          <ScalarProperty Name="tarimas_Id" ColumnName="tarimas_Id" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="li_detcajasskus">
+      <EntityTypeMapping TypeName="DB_A3F19C_producccionModel.li_detcajasskus">
+        <MappingFragment StoreEntitySet="li_detcajasskus">
+          <ScalarProperty Name="id" ColumnName="id" />
+          <ScalarProperty Name="Cantidad" ColumnName="Cantidad" />
+          <ScalarProperty Name="CajasLI_Id" ColumnName="CajasLI_Id" />
+          <ScalarProperty Name="skus_Id" ColumnName="skus_Id" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="li_origen">
+      <EntityTypeMapping TypeName="DB_A3F19C_producccionModel.li_origen">
+        <MappingFragment StoreEntitySet="li_origen">
+          <ScalarProperty Name="id" ColumnName="id" />
+          <ScalarProperty Name="nomenclatura" ColumnName="nomenclatura" />
+          <ScalarProperty Name="descripcion" ColumnName="descripcion" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="li_status">
+      <EntityTypeMapping TypeName="DB_A3F19C_producccionModel.li_status">
+        <MappingFragment StoreEntitySet="li_status">
+          <ScalarProperty Name="id" ColumnName="id" />
+          <ScalarProperty Name="descripcion" ColumnName="descripcion" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="li_statustarimas">
+      <EntityTypeMapping TypeName="DB_A3F19C_producccionModel.li_statustarimas">
+        <MappingFragment StoreEntitySet="li_statustarimas">
+          <ScalarProperty Name="id" ColumnName="id" />
+          <ScalarProperty Name="descripcion" ColumnName="descripcion" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="li_tarimas">
+      <EntityTypeMapping TypeName="DB_A3F19C_producccionModel.li_tarimas">
+        <MappingFragment StoreEntitySet="li_tarimas">
+          <ScalarProperty Name="id" ColumnName="id" />
+          <ScalarProperty Name="Folio" ColumnName="Folio" />
+          <ScalarProperty Name="FechaHoraCreacion" ColumnName="FechaHoraCreacion" />
+          <ScalarProperty Name="statustarimas_Id" ColumnName="statustarimas_Id" />
+          <ScalarProperty Name="logisticainversa_Id" ColumnName="logisticainversa_Id" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="logisticainversa">
+      <EntityTypeMapping TypeName="DB_A3F19C_producccionModel.logisticainversa">
+        <MappingFragment StoreEntitySet="logisticainversa">
+          <ScalarProperty Name="id" ColumnName="id" />
+          <ScalarProperty Name="Folio" ColumnName="Folio" />
+          <ScalarProperty Name="FechaAlta" ColumnName="FechaAlta" />
+          <ScalarProperty Name="origenlogistica_id" ColumnName="origenlogistica_id" />
+          <ScalarProperty Name="statuslogisticasinversas_Id" ColumnName="statuslogisticasinversas_Id" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="skus">
+      <EntityTypeMapping TypeName="DB_A3F19C_producccionModel.skus">
+        <MappingFragment StoreEntitySet="skus">
+          <ScalarProperty Name="id" ColumnName="id" />
+          <ScalarProperty Name="SKU" ColumnName="SKU" />
+          <ScalarProperty Name="Descripcion" ColumnName="Descripcion" />
+          <ScalarProperty Name="codigobarras" ColumnName="codigobarras" />
+          <ScalarProperty Name="uom_id" ColumnName="uom_id" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="skusbenavides">
+      <EntityTypeMapping TypeName="DB_A3F19C_producccionModel.skusbenavides">
+        <MappingFragment StoreEntitySet="skusbenavides">
+          <ScalarProperty Name="id" ColumnName="id" />
+          <ScalarProperty Name="codigobarras" ColumnName="codigobarras" />
+          <ScalarProperty Name="skus_Id" ColumnName="skus_Id" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="skusinventarios">
+      <EntityTypeMapping TypeName="DB_A3F19C_producccionModel.skusinventarios">
+        <MappingFragment StoreEntitySet="skusinventarios">
+          <ScalarProperty Name="id" ColumnName="id" />
+          <ScalarProperty Name="qtymanual" ColumnName="qtymanual" />
+          <ScalarProperty Name="skus_Id" ColumnName="skus_Id" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="uom">
+      <EntityTypeMapping TypeName="DB_A3F19C_producccionModel.uom">
+        <MappingFragment StoreEntitySet="uom">
+          <ScalarProperty Name="id" ColumnName="id" />
+          <ScalarProperty Name="descripcion" ColumnName="descripcion" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+  </EntityContainerMapping>
+</Mapping>

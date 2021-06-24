@@ -1,0 +1,695 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+      <Schema Namespace="DB_A3F19C_producccionModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="li_cajas">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Folio" Type="varchar" MaxLength="50" />
+          <Property Name="tarimas_Id" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="li_detcajasskus">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Cantidad" Type="int" Nullable="false" />
+          <Property Name="CajasLI_Id" Type="int" Nullable="false" />
+          <Property Name="skus_Id" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="li_origen">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="nomenclatura" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="descripcion" Type="varchar" MaxLength="50" />
+        </EntityType>
+        <EntityType Name="li_status">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="descripcion" Type="varchar" MaxLength="50" />
+        </EntityType>
+        <EntityType Name="li_statustarimas">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="descripcion" Type="varchar" MaxLength="50" />
+        </EntityType>
+        <EntityType Name="li_tarimas">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Folio" Type="varchar" MaxLength="50" />
+          <Property Name="FechaHoraCreacion" Type="datetime" />
+          <Property Name="statustarimas_Id" Type="int" Nullable="false" />
+          <Property Name="logisticainversa_Id" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="logisticainversa">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Folio" Type="varchar" MaxLength="50" />
+          <Property Name="FechaAlta" Type="datetime" />
+          <Property Name="origenlogistica_id" Type="int" Nullable="false" />
+          <Property Name="statuslogisticasinversas_Id" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="skus">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="SKU" Type="varchar" MaxLength="50" />
+          <Property Name="Descripcion" Type="varchar" MaxLength="200" />
+          <Property Name="codigobarras" Type="varchar" MaxLength="50" />
+          <Property Name="uom_id" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="skusbenavides">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="codigobarras" Type="varchar" MaxLength="50" />
+          <Property Name="skus_Id" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="skusinventarios">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="qtymanual" Type="bit" />
+          <Property Name="skus_Id" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="uom">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="descripcion" Type="varchar" MaxLength="50" />
+        </EntityType>
+        <Association Name="cajasli_tarimas_fk">
+          <End Role="li_tarimas" Type="Self.li_tarimas" Multiplicity="1" />
+          <End Role="li_cajas" Type="Self.li_cajas" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="li_tarimas">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="li_cajas">
+              <PropertyRef Name="tarimas_Id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="detcajasskus_cajasli_fk">
+          <End Role="li_cajas" Type="Self.li_cajas" Multiplicity="1" />
+          <End Role="li_detcajasskus" Type="Self.li_detcajasskus" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="li_cajas">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="li_detcajasskus">
+              <PropertyRef Name="CajasLI_Id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="detcajasskus_skus_fk">
+          <End Role="skus" Type="Self.skus" Multiplicity="1" />
+          <End Role="li_detcajasskus" Type="Self.li_detcajasskus" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="skus">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="li_detcajasskus">
+              <PropertyRef Name="skus_Id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="logisticainversa_origenlogistica_fk">
+          <End Role="li_origen" Type="Self.li_origen" Multiplicity="1" />
+          <End Role="logisticainversa" Type="Self.logisticainversa" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="li_origen">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="logisticainversa">
+              <PropertyRef Name="origenlogistica_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="logisticainversa_statuslogisticasinversas_fk">
+          <End Role="li_status" Type="Self.li_status" Multiplicity="1" />
+          <End Role="logisticainversa" Type="Self.logisticainversa" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="li_status">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="logisticainversa">
+              <PropertyRef Name="statuslogisticasinversas_Id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="skus_uom_fk">
+          <End Role="uom" Type="Self.uom" Multiplicity="1" />
+          <End Role="skus" Type="Self.skus" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="uom">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="skus">
+              <PropertyRef Name="uom_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="skusbenavides_skus_fk">
+          <End Role="skus" Type="Self.skus" Multiplicity="1" />
+          <End Role="skusbenavides" Type="Self.skusbenavides" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="skus">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="skusbenavides">
+              <PropertyRef Name="skus_Id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="skusinventarios_skus_fk">
+          <End Role="skus" Type="Self.skus" Multiplicity="1" />
+          <End Role="skusinventarios" Type="Self.skusinventarios" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="skus">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="skusinventarios">
+              <PropertyRef Name="skus_Id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="tarimas_logisticainversa_fk">
+          <End Role="logisticainversa" Type="Self.logisticainversa" Multiplicity="1" />
+          <End Role="li_tarimas" Type="Self.li_tarimas" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="logisticainversa">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="li_tarimas">
+              <PropertyRef Name="logisticainversa_Id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="tarimas_statustarimas_fk">
+          <End Role="li_statustarimas" Type="Self.li_statustarimas" Multiplicity="1" />
+          <End Role="li_tarimas" Type="Self.li_tarimas" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="li_statustarimas">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="li_tarimas">
+              <PropertyRef Name="statustarimas_Id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="DB_A3F19C_producccionModelStoreContainer">
+          <EntitySet Name="li_cajas" EntityType="Self.li_cajas" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="li_detcajasskus" EntityType="Self.li_detcajasskus" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="li_origen" EntityType="Self.li_origen" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="li_status" EntityType="Self.li_status" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="li_statustarimas" EntityType="Self.li_statustarimas" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="li_tarimas" EntityType="Self.li_tarimas" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="logisticainversa" EntityType="Self.logisticainversa" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="skus" EntityType="Self.skus" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="skusbenavides" EntityType="Self.skusbenavides" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="skusinventarios" EntityType="Self.skusinventarios" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="uom" EntityType="Self.uom" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="cajasli_tarimas_fk" Association="Self.cajasli_tarimas_fk">
+            <End Role="li_tarimas" EntitySet="li_tarimas" />
+            <End Role="li_cajas" EntitySet="li_cajas" />
+          </AssociationSet>
+          <AssociationSet Name="detcajasskus_cajasli_fk" Association="Self.detcajasskus_cajasli_fk">
+            <End Role="li_cajas" EntitySet="li_cajas" />
+            <End Role="li_detcajasskus" EntitySet="li_detcajasskus" />
+          </AssociationSet>
+          <AssociationSet Name="detcajasskus_skus_fk" Association="Self.detcajasskus_skus_fk">
+            <End Role="skus" EntitySet="skus" />
+            <End Role="li_detcajasskus" EntitySet="li_detcajasskus" />
+          </AssociationSet>
+          <AssociationSet Name="logisticainversa_origenlogistica_fk" Association="Self.logisticainversa_origenlogistica_fk">
+            <End Role="li_origen" EntitySet="li_origen" />
+            <End Role="logisticainversa" EntitySet="logisticainversa" />
+          </AssociationSet>
+          <AssociationSet Name="logisticainversa_statuslogisticasinversas_fk" Association="Self.logisticainversa_statuslogisticasinversas_fk">
+            <End Role="li_status" EntitySet="li_status" />
+            <End Role="logisticainversa" EntitySet="logisticainversa" />
+          </AssociationSet>
+          <AssociationSet Name="skus_uom_fk" Association="Self.skus_uom_fk">
+            <End Role="uom" EntitySet="uom" />
+            <End Role="skus" EntitySet="skus" />
+          </AssociationSet>
+          <AssociationSet Name="skusbenavides_skus_fk" Association="Self.skusbenavides_skus_fk">
+            <End Role="skus" EntitySet="skus" />
+            <End Role="skusbenavides" EntitySet="skusbenavides" />
+          </AssociationSet>
+          <AssociationSet Name="skusinventarios_skus_fk" Association="Self.skusinventarios_skus_fk">
+            <End Role="skus" EntitySet="skus" />
+            <End Role="skusinventarios" EntitySet="skusinventarios" />
+          </AssociationSet>
+          <AssociationSet Name="tarimas_logisticainversa_fk" Association="Self.tarimas_logisticainversa_fk">
+            <End Role="logisticainversa" EntitySet="logisticainversa" />
+            <End Role="li_tarimas" EntitySet="li_tarimas" />
+          </AssociationSet>
+          <AssociationSet Name="tarimas_statustarimas_fk" Association="Self.tarimas_statustarimas_fk">
+            <End Role="li_statustarimas" EntitySet="li_statustarimas" />
+            <End Role="li_tarimas" EntitySet="li_tarimas" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="DB_A3F19C_producccionModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="li_cajas">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Folio" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="tarimas_Id" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="li_tarimas" Relationship="Self.cajasli_tarimas_fk" FromRole="li_cajas" ToRole="li_tarimas" />
+          <NavigationProperty Name="li_detcajasskus" Relationship="Self.detcajasskus_cajasli_fk" FromRole="li_cajas" ToRole="li_detcajasskus" />
+        </EntityType>
+        <EntityType Name="li_detcajasskus">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Cantidad" Type="Int32" Nullable="false" />
+          <Property Name="CajasLI_Id" Type="Int32" Nullable="false" />
+          <Property Name="skus_Id" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="li_cajas" Relationship="Self.detcajasskus_cajasli_fk" FromRole="li_detcajasskus" ToRole="li_cajas" />
+          <NavigationProperty Name="skus" Relationship="Self.detcajasskus_skus_fk" FromRole="li_detcajasskus" ToRole="skus" />
+        </EntityType>
+        <EntityType Name="li_origen">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="nomenclatura" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="descripcion" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="logisticainversa" Relationship="Self.logisticainversa_origenlogistica_fk" FromRole="li_origen" ToRole="logisticainversa" />
+        </EntityType>
+        <EntityType Name="li_status">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="descripcion" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="logisticainversa" Relationship="Self.logisticainversa_statuslogisticasinversas_fk" FromRole="li_status" ToRole="logisticainversa" />
+        </EntityType>
+        <EntityType Name="li_statustarimas">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="descripcion" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="li_tarimas" Relationship="Self.tarimas_statustarimas_fk" FromRole="li_statustarimas" ToRole="li_tarimas" />
+        </EntityType>
+        <EntityType Name="li_tarimas">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Folio" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="FechaHoraCreacion" Type="DateTime" Precision="3" />
+          <Property Name="statustarimas_Id" Type="Int32" Nullable="false" />
+          <Property Name="logisticainversa_Id" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="li_cajas" Relationship="Self.cajasli_tarimas_fk" FromRole="li_tarimas" ToRole="li_cajas" />
+          <NavigationProperty Name="li_statustarimas" Relationship="Self.tarimas_statustarimas_fk" FromRole="li_tarimas" ToRole="li_statustarimas" />
+          <NavigationProperty Name="logisticainversa" Relationship="Self.tarimas_logisticainversa_fk" FromRole="li_tarimas" ToRole="logisticainversa" />
+        </EntityType>
+        <EntityType Name="logisticainversa">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Folio" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="FechaAlta" Type="DateTime" Precision="3" />
+          <Property Name="origenlogistica_id" Type="Int32" Nullable="false" />
+          <Property Name="statuslogisticasinversas_Id" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="li_origen" Relationship="Self.logisticainversa_origenlogistica_fk" FromRole="logisticainversa" ToRole="li_origen" />
+          <NavigationProperty Name="li_status" Relationship="Self.logisticainversa_statuslogisticasinversas_fk" FromRole="logisticainversa" ToRole="li_status" />
+          <NavigationProperty Name="li_tarimas" Relationship="Self.tarimas_logisticainversa_fk" FromRole="logisticainversa" ToRole="li_tarimas" />
+        </EntityType>
+        <EntityType Name="skus">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="SKU" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="Descripcion" Type="String" MaxLength="200" FixedLength="false" Unicode="false" />
+          <Property Name="codigobarras" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="uom_id" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="li_detcajasskus" Relationship="Self.detcajasskus_skus_fk" FromRole="skus" ToRole="li_detcajasskus" />
+          <NavigationProperty Name="uom" Relationship="Self.skus_uom_fk" FromRole="skus" ToRole="uom" />
+          <NavigationProperty Name="skusbenavides" Relationship="Self.skusbenavides_skus_fk" FromRole="skus" ToRole="skusbenavides" />
+          <NavigationProperty Name="skusinventarios" Relationship="Self.skusinventarios_skus_fk" FromRole="skus" ToRole="skusinventarios" />
+        </EntityType>
+        <EntityType Name="skusbenavides">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="codigobarras" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="skus_Id" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="skus" Relationship="Self.skusbenavides_skus_fk" FromRole="skusbenavides" ToRole="skus" />
+        </EntityType>
+        <EntityType Name="skusinventarios">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="qtymanual" Type="Boolean" />
+          <Property Name="skus_Id" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="skus" Relationship="Self.skusinventarios_skus_fk" FromRole="skusinventarios" ToRole="skus" />
+        </EntityType>
+        <EntityType Name="uom">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="descripcion" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="skus" Relationship="Self.skus_uom_fk" FromRole="uom" ToRole="skus" />
+        </EntityType>
+        <Association Name="cajasli_tarimas_fk">
+          <End Role="li_tarimas" Type="Self.li_tarimas" Multiplicity="1" />
+          <End Role="li_cajas" Type="Self.li_cajas" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="li_tarimas">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="li_cajas">
+              <PropertyRef Name="tarimas_Id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="detcajasskus_cajasli_fk">
+          <End Role="li_cajas" Type="Self.li_cajas" Multiplicity="1" />
+          <End Role="li_detcajasskus" Type="Self.li_detcajasskus" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="li_cajas">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="li_detcajasskus">
+              <PropertyRef Name="CajasLI_Id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="detcajasskus_skus_fk">
+          <End Role="skus" Type="Self.skus" Multiplicity="1" />
+          <End Role="li_detcajasskus" Type="Self.li_detcajasskus" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="skus">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="li_detcajasskus">
+              <PropertyRef Name="skus_Id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="logisticainversa_origenlogistica_fk">
+          <End Role="li_origen" Type="Self.li_origen" Multiplicity="1" />
+          <End Role="logisticainversa" Type="Self.logisticainversa" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="li_origen">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="logisticainversa">
+              <PropertyRef Name="origenlogistica_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="logisticainversa_statuslogisticasinversas_fk">
+          <End Role="li_status" Type="Self.li_status" Multiplicity="1" />
+          <End Role="logisticainversa" Type="Self.logisticainversa" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="li_status">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="logisticainversa">
+              <PropertyRef Name="statuslogisticasinversas_Id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="tarimas_statustarimas_fk">
+          <End Role="li_statustarimas" Type="Self.li_statustarimas" Multiplicity="1" />
+          <End Role="li_tarimas" Type="Self.li_tarimas" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="li_statustarimas">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="li_tarimas">
+              <PropertyRef Name="statustarimas_Id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="tarimas_logisticainversa_fk">
+          <End Role="logisticainversa" Type="Self.logisticainversa" Multiplicity="1" />
+          <End Role="li_tarimas" Type="Self.li_tarimas" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="logisticainversa">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="li_tarimas">
+              <PropertyRef Name="logisticainversa_Id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="skus_uom_fk">
+          <End Role="uom" Type="Self.uom" Multiplicity="1" />
+          <End Role="skus" Type="Self.skus" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="uom">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="skus">
+              <PropertyRef Name="uom_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="skusbenavides_skus_fk">
+          <End Role="skus" Type="Self.skus" Multiplicity="1" />
+          <End Role="skusbenavides" Type="Self.skusbenavides" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="skus">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="skusbenavides">
+              <PropertyRef Name="skus_Id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="skusinventarios_skus_fk">
+          <End Role="skus" Type="Self.skus" Multiplicity="1" />
+          <End Role="skusinventarios" Type="Self.skusinventarios" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="skus">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="skusinventarios">
+              <PropertyRef Name="skus_Id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="DB_A3F19C_producccionEntities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="li_cajas" EntityType="Self.li_cajas" />
+          <EntitySet Name="li_detcajasskus" EntityType="Self.li_detcajasskus" />
+          <EntitySet Name="li_origen" EntityType="Self.li_origen" />
+          <EntitySet Name="li_status" EntityType="Self.li_status" />
+          <EntitySet Name="li_statustarimas" EntityType="Self.li_statustarimas" />
+          <EntitySet Name="li_tarimas" EntityType="Self.li_tarimas" />
+          <EntitySet Name="logisticainversa" EntityType="Self.logisticainversa" />
+          <EntitySet Name="skus" EntityType="Self.skus" />
+          <EntitySet Name="skusbenavides" EntityType="Self.skusbenavides" />
+          <EntitySet Name="skusinventarios" EntityType="Self.skusinventarios" />
+          <EntitySet Name="uom" EntityType="Self.uom" />
+          <AssociationSet Name="cajasli_tarimas_fk" Association="Self.cajasli_tarimas_fk">
+            <End Role="li_tarimas" EntitySet="li_tarimas" />
+            <End Role="li_cajas" EntitySet="li_cajas" />
+          </AssociationSet>
+          <AssociationSet Name="detcajasskus_cajasli_fk" Association="Self.detcajasskus_cajasli_fk">
+            <End Role="li_cajas" EntitySet="li_cajas" />
+            <End Role="li_detcajasskus" EntitySet="li_detcajasskus" />
+          </AssociationSet>
+          <AssociationSet Name="detcajasskus_skus_fk" Association="Self.detcajasskus_skus_fk">
+            <End Role="skus" EntitySet="skus" />
+            <End Role="li_detcajasskus" EntitySet="li_detcajasskus" />
+          </AssociationSet>
+          <AssociationSet Name="logisticainversa_origenlogistica_fk" Association="Self.logisticainversa_origenlogistica_fk">
+            <End Role="li_origen" EntitySet="li_origen" />
+            <End Role="logisticainversa" EntitySet="logisticainversa" />
+          </AssociationSet>
+          <AssociationSet Name="logisticainversa_statuslogisticasinversas_fk" Association="Self.logisticainversa_statuslogisticasinversas_fk">
+            <End Role="li_status" EntitySet="li_status" />
+            <End Role="logisticainversa" EntitySet="logisticainversa" />
+          </AssociationSet>
+          <AssociationSet Name="tarimas_statustarimas_fk" Association="Self.tarimas_statustarimas_fk">
+            <End Role="li_statustarimas" EntitySet="li_statustarimas" />
+            <End Role="li_tarimas" EntitySet="li_tarimas" />
+          </AssociationSet>
+          <AssociationSet Name="tarimas_logisticainversa_fk" Association="Self.tarimas_logisticainversa_fk">
+            <End Role="logisticainversa" EntitySet="logisticainversa" />
+            <End Role="li_tarimas" EntitySet="li_tarimas" />
+          </AssociationSet>
+          <AssociationSet Name="skus_uom_fk" Association="Self.skus_uom_fk">
+            <End Role="uom" EntitySet="uom" />
+            <End Role="skus" EntitySet="skus" />
+          </AssociationSet>
+          <AssociationSet Name="skusbenavides_skus_fk" Association="Self.skusbenavides_skus_fk">
+            <End Role="skus" EntitySet="skus" />
+            <End Role="skusbenavides" EntitySet="skusbenavides" />
+          </AssociationSet>
+          <AssociationSet Name="skusinventarios_skus_fk" Association="Self.skusinventarios_skus_fk">
+            <End Role="skus" EntitySet="skus" />
+            <End Role="skusinventarios" EntitySet="skusinventarios" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="DB_A3F19C_producccionModelStoreContainer" CdmEntityContainer="DB_A3F19C_producccionEntities">
+          <EntitySetMapping Name="li_cajas">
+            <EntityTypeMapping TypeName="DB_A3F19C_producccionModel.li_cajas">
+              <MappingFragment StoreEntitySet="li_cajas">
+                <ScalarProperty Name="id" ColumnName="id" />
+                <ScalarProperty Name="Folio" ColumnName="Folio" />
+                <ScalarProperty Name="tarimas_Id" ColumnName="tarimas_Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="li_detcajasskus">
+            <EntityTypeMapping TypeName="DB_A3F19C_producccionModel.li_detcajasskus">
+              <MappingFragment StoreEntitySet="li_detcajasskus">
+                <ScalarProperty Name="id" ColumnName="id" />
+                <ScalarProperty Name="Cantidad" ColumnName="Cantidad" />
+                <ScalarProperty Name="CajasLI_Id" ColumnName="CajasLI_Id" />
+                <ScalarProperty Name="skus_Id" ColumnName="skus_Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="li_origen">
+            <EntityTypeMapping TypeName="DB_A3F19C_producccionModel.li_origen">
+              <MappingFragment StoreEntitySet="li_origen">
+                <ScalarProperty Name="id" ColumnName="id" />
+                <ScalarProperty Name="nomenclatura" ColumnName="nomenclatura" />
+                <ScalarProperty Name="descripcion" ColumnName="descripcion" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="li_status">
+            <EntityTypeMapping TypeName="DB_A3F19C_producccionModel.li_status">
+              <MappingFragment StoreEntitySet="li_status">
+                <ScalarProperty Name="id" ColumnName="id" />
+                <ScalarProperty Name="descripcion" ColumnName="descripcion" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="li_statustarimas">
+            <EntityTypeMapping TypeName="DB_A3F19C_producccionModel.li_statustarimas">
+              <MappingFragment StoreEntitySet="li_statustarimas">
+                <ScalarProperty Name="id" ColumnName="id" />
+                <ScalarProperty Name="descripcion" ColumnName="descripcion" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="li_tarimas">
+            <EntityTypeMapping TypeName="DB_A3F19C_producccionModel.li_tarimas">
+              <MappingFragment StoreEntitySet="li_tarimas">
+                <ScalarProperty Name="id" ColumnName="id" />
+                <ScalarProperty Name="Folio" ColumnName="Folio" />
+                <ScalarProperty Name="FechaHoraCreacion" ColumnName="FechaHoraCreacion" />
+                <ScalarProperty Name="statustarimas_Id" ColumnName="statustarimas_Id" />
+                <ScalarProperty Name="logisticainversa_Id" ColumnName="logisticainversa_Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="logisticainversa">
+            <EntityTypeMapping TypeName="DB_A3F19C_producccionModel.logisticainversa">
+              <MappingFragment StoreEntitySet="logisticainversa">
+                <ScalarProperty Name="id" ColumnName="id" />
+                <ScalarProperty Name="Folio" ColumnName="Folio" />
+                <ScalarProperty Name="FechaAlta" ColumnName="FechaAlta" />
+                <ScalarProperty Name="origenlogistica_id" ColumnName="origenlogistica_id" />
+                <ScalarProperty Name="statuslogisticasinversas_Id" ColumnName="statuslogisticasinversas_Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="skus">
+            <EntityTypeMapping TypeName="DB_A3F19C_producccionModel.skus">
+              <MappingFragment StoreEntitySet="skus">
+                <ScalarProperty Name="id" ColumnName="id" />
+                <ScalarProperty Name="SKU" ColumnName="SKU" />
+                <ScalarProperty Name="Descripcion" ColumnName="Descripcion" />
+                <ScalarProperty Name="codigobarras" ColumnName="codigobarras" />
+                <ScalarProperty Name="uom_id" ColumnName="uom_id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="skusbenavides">
+            <EntityTypeMapping TypeName="DB_A3F19C_producccionModel.skusbenavides">
+              <MappingFragment StoreEntitySet="skusbenavides">
+                <ScalarProperty Name="id" ColumnName="id" />
+                <ScalarProperty Name="codigobarras" ColumnName="codigobarras" />
+                <ScalarProperty Name="skus_Id" ColumnName="skus_Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="skusinventarios">
+            <EntityTypeMapping TypeName="DB_A3F19C_producccionModel.skusinventarios">
+              <MappingFragment StoreEntitySet="skusinventarios">
+                <ScalarProperty Name="id" ColumnName="id" />
+                <ScalarProperty Name="qtymanual" ColumnName="qtymanual" />
+                <ScalarProperty Name="skus_Id" ColumnName="skus_Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="uom">
+            <EntityTypeMapping TypeName="DB_A3F19C_producccionModel.uom">
+              <MappingFragment StoreEntitySet="uom">
+                <ScalarProperty Name="id" ColumnName="id" />
+                <ScalarProperty Name="descripcion" ColumnName="descripcion" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="false" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="Ninguno" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>
